@@ -29,3 +29,11 @@ def create(request):
 def destroy(request, question_id):
     delete_company(question_id)
     return HttpResponse(status=204)
+
+
+@csrf_exempt
+def update(request, question_id):
+    company = Company.objects.get(pk=question_id)
+    company.__dict__.update(request.POST.dict())
+    company.save()
+    return HttpResponse(serializers.serialize('json', [company]))
