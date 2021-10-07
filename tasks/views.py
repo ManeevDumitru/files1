@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.core import serializers
 from tasks.models import Company
 from django.views.decorators.csrf import csrf_exempt
+from .services import *
 
 
 def index(request):
@@ -22,3 +23,9 @@ def create(request):
     )
     company.save()
     return HttpResponse(status=201)
+
+
+@csrf_exempt
+def destroy(request, question_id):
+    delete_company(question_id)
+    return HttpResponse(status=204)
